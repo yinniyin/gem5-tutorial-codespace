@@ -32,6 +32,16 @@ board = SimpleBoard(
     cache_hierarchy=cache_hierarchy,
 )
 
-### TO COMPLETE HERE ####
+# jump to part of the workload to simulate ?
+board.set_se_simpoint_workload(
+    binary=obtain_resource("x86-print-this"),
+    arguments=["print this", 15000],
+    simpoint=SimpointResource(
+        simpoint_interval=1000000, # each interval contains 1M instruction
+        simpoint_list=[2,3,4,15],  # only care about these 4 regions
+        weight_list=[0.1,0.2,0.4,0.3],
+        warmup_interval=1000000,
+    )
+)
 
 simulator.run()
